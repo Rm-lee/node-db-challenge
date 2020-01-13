@@ -35,7 +35,7 @@ await knex.schema.createTable("project_parts", (table) => {
  .notNullable()
  .references("id")
  .inTable("project")
- table.primary(['task_id',"resource_id","project_id"])
+ table.primary(["resource_id","project_id"])
 })
 };
 exports.down = async function(knex) {
