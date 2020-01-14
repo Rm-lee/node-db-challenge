@@ -8,21 +8,31 @@ const server = express()
 server.use(helmet())
 server.use(express.json())
 
-server.get('/api/projects', (req,res) => {
- db('projects as p')
- .leftJoin('resources as r', 'r.id','p.task_id')
-
+server.get('/api/resources', (req,res) => {
+ db('resource as r')
+ .then(sources => {
+   res.status(200).json(sources)
+ })
+ .catch(error => {
+  res.status(500).json(error);
+});
 })
 
 server.post('/api/resources', (req, res) => {
- console.log(req.body)
- db('resources').insert(req.body)
- .then(ids => {
-  res.status(201).json(ids)
+ if(req.body.name){
+   
+ 
+ db('resource').insert(req.body)
+ .then(id => {
+  res.status(201).json(id)
  })
  .catch(error => {
    res.status(500).json(error);
  });
+}
+else{
+  res.status(400).json({message: "Must include Name"})
+}
 });
 
 module.exports = server
