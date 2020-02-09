@@ -8,6 +8,7 @@ const server = express()
 server.use(helmet())
 server.use(express.json())
 
+//get resources
 server.get('/api/resources', (req,res) => {
  db('resource as r')
  .then(sources => {
